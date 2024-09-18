@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:tier_list_maker/categories/widgets/widgets.dart';
 import 'package:tier_list_maker/core/core.dart';
 
-
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
 
@@ -115,53 +114,64 @@ class _CategoriesPageState extends State<CategoriesPage> {
           });
         },
         children: [
-          CategoryCard(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
             key: Key(upper[0].join()),
-            color: const Color(0xFFFF7F7F),
-            columns: columns,
-            itemSpacing: itemSpacing,
-            widthLeftPanel: widthLeftPanel,
-            items: upper[0],
-            onDrop: drop,
-            onUpdateDropPreview: (p0) {
-              updateDropPreview(p0.copyWith(panelIndex: 0));
-            },
-            onDragStart: (p0) {
-              onDragStart(p0.copyWith(panelIndex: 0));
-            },
-            dragStart: dragStart?.$2 == Panel.upper && dragStart?.$3 == 0
-                ? dragStart
-                : null,
-            dropPreview: dropPreview?.$2 == Panel.upper && dropPreview?.$3 == 0
-                ? dropPreview
-                : null,
-            hoveringData: dropPreview?.$2 == Panel.upper && dropPreview?.$3 == 0
-                ? hoveringData
-                : null,
+            child: CategoryCard(
+              color: const Color(0xFFFF7F7F),
+              columns: columns,
+              itemSpacing: itemSpacing,
+              widthLeftPanel: widthLeftPanel,
+              items: upper[0],
+              onDrop: drop,
+              onUpdateDropPreview: (p0) {
+                updateDropPreview(p0.copyWith(panelIndex: 0));
+              },
+              onDragStart: (p0) {
+                onDragStart(p0.copyWith(panelIndex: 0));
+              },
+              dragStart: dragStart?.$2 == Panel.upper && dragStart?.$3 == 0
+                  ? dragStart
+                  : null,
+              dropPreview:
+                  dropPreview?.$2 == Panel.upper && dropPreview?.$3 == 0
+                      ? dropPreview
+                      : null,
+              hoveringData:
+                  dropPreview?.$2 == Panel.upper && dropPreview?.$3 == 0
+                      ? hoveringData
+                      : null,
+            ),
           ),
-          CategoryCard(
+          Padding(
             key: Key(upper[1].join()),
-            color: const Color(0xFFFFBF7F),
-            columns: columns,
-            itemSpacing: itemSpacing,
-            widthLeftPanel: widthLeftPanel,
-            items: upper[1],
-            onDrop: drop,
-            onUpdateDropPreview: (p0) {
-              updateDropPreview(p0.copyWith(panelIndex: 1));
-            },
-            onDragStart: (p0) {
-              onDragStart(p0.copyWith(panelIndex: 1));
-            },
-            dragStart: dragStart?.$2 == Panel.upper && dragStart?.$3 == 1
-                ? dragStart
-                : null,
-            dropPreview: dropPreview?.$2 == Panel.upper && dropPreview?.$3 == 1
-                ? dropPreview
-                : null,
-            hoveringData: dropPreview?.$2 == Panel.upper && dropPreview?.$3 == 1
-                ? hoveringData
-                : null,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: CategoryCard(
+              key: Key(upper[1].join()),
+              color: const Color(0xFFFFBF7F),
+              columns: columns,
+              itemSpacing: itemSpacing,
+              widthLeftPanel: widthLeftPanel,
+              items: upper[1],
+              onDrop: drop,
+              onUpdateDropPreview: (p0) {
+                updateDropPreview(p0.copyWith(panelIndex: 1));
+              },
+              onDragStart: (p0) {
+                onDragStart(p0.copyWith(panelIndex: 1));
+              },
+              dragStart: dragStart?.$2 == Panel.upper && dragStart?.$3 == 1
+                  ? dragStart
+                  : null,
+              dropPreview:
+                  dropPreview?.$2 == Panel.upper && dropPreview?.$3 == 1
+                      ? dropPreview
+                      : null,
+              hoveringData:
+                  dropPreview?.$2 == Panel.upper && dropPreview?.$3 == 1
+                      ? hoveringData
+                      : null,
+            ),
           ),
         ],
       ),
