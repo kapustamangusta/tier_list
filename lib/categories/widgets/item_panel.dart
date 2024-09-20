@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:tier_list_maker/categories/widgets/widgets.dart';
 import 'package:tier_list_maker/core/core.dart';
 
-
 class ItemPanel extends StatelessWidget {
   const ItemPanel(
       {super.key,
@@ -49,11 +48,11 @@ class ItemPanel extends StatelessWidget {
     }
 
     return GridView.count(
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: crossAxisCount,
       padding: const EdgeInsets.all(0),
       mainAxisSpacing: spacing,
       crossAxisSpacing: spacing,
-      shrinkWrap: true,
       children: itemsCopy.asMap().entries.map<Widget>(
         (MapEntry<int, String> entry) {
           Color textColor =
@@ -95,13 +94,10 @@ class ItemPanel extends StatelessWidget {
             );
           }
 
-          return Draggable(
-            feedback: Container(),
-            child: MyDraggableWidgets(
-              data: entry.value,
-              child: child,
-              onDragStart: () => onDragStart((entry.key, panel, null)),
-            ),
+          return MyDraggableWidgets(
+            data: entry.value,
+            child: child,
+            onDragStart: () => onDragStart((entry.key, panel, null)),
           );
         },
       ).toList(),

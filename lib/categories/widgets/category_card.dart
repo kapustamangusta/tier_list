@@ -19,7 +19,7 @@ class CategoryCard extends StatelessWidget {
       required this.color});
 
   final int columns;
-  final int itemSpacing;
+  final double itemSpacing;
   final double widthLeftPanel;
   final List<String> items;
 
@@ -70,6 +70,7 @@ class CategoryCard extends StatelessWidget {
               Flexible(
                 flex: 4,
                 child: CategoryContent(
+                  itemSpacing: itemSpacing,
                   height: heightContent,
                   width: constraints.maxWidth - widthLeftPanel,
                   itemSize: itemSize,

@@ -88,7 +88,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   Size itemSize = Size.zero;
   final int columns = 4;
-  final int itemSpacing = 0;
+  final double itemSpacing = 1;
   final double widthLeftPanel = 80;
   final double heightLowerPanel = 120;
   bool pinned = false;
@@ -153,6 +153,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
       // ),
       body: Stack(
         children: [
+          
           CustomScrollView(
             controller: _scrollController,
             slivers: [
@@ -169,7 +170,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Transform.scale(
-                      scale: 0.5,
+                      scale: 0.8,
                       child: Container(child: child),
                     ),
                   );
@@ -234,7 +235,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               ? DropRegion(
                   formats: Formats.standardFormats,
                   onDropOver: (p0) async {
-                    _scrollController.jumpTo(_scrollController.offset - 5);
+                    _scrollController.jumpTo(_scrollController.offset - 2);
 
                     return DropOperation.userCancelled;
                   },
@@ -252,7 +253,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   child: DropRegion(
                     formats: Formats.standardFormats,
                     onDropOver: (p0) async {
-                      _scrollController.jumpTo(_scrollController.offset + 5);
+                      _scrollController.jumpTo(_scrollController.offset + 2);
 
                       return DropOperation.none;
                     },
