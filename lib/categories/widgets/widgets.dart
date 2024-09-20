@@ -4,3 +4,4 @@ export "category_content.dart";
 export "item_panel.dart";
 export "my_draggable_widgets.dart";
 export "my_drop_region.dart";
+export "drop_hover_region.dart";

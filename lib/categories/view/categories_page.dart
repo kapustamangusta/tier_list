@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 import 'package:tier_list_maker/categories/widgets/widgets.dart';
 import 'package:tier_list_maker/core/core.dart';
 
@@ -91,7 +90,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   final double itemSpacing = 1;
   final double widthLeftPanel = 80;
   final double heightLowerPanel = 120;
-  bool pinned = false;
+  bool showDropRegion = false;
 
   final ScrollController _scrollController = ScrollController();
 
@@ -104,7 +103,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     }
 
     setState(() {
-      pinned = true;
+      showDropRegion = true;
       dragStart = start;
       hoveringData = data;
     });
@@ -132,28 +131,21 @@ class _CategoriesPageState extends State<CategoriesPage> {
       dragStart = null;
       dropPreview = null;
       hoveringData = null;
-      pinned = false;
+      showDropRegion = false;
     });
   }
 
   void updateDropPreview(PanelLocation update) => setState(() {
         dropPreview = update;
-
-        // _scrollController.jumpTo(_scrollController.offset - 10);
       });
+
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Фильмы"),
-      //   actions: [
-      //     IconButton(onPressed: () {}, icon: const Icon(Icons.settings))
-      //   ],
-      // ),
       body: Stack(
         children: [
-          
           CustomScrollView(
             controller: _scrollController,
             slivers: [
@@ -175,15 +167,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     ),
                   );
                 },
-                onReorder: (oldIndex, newIndex) {
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    final List<String> item = upper.removeAt(oldIndex);
-                    upper.insert(newIndex, item);
-                  });
-                },
+                onReorder: _reorderCategories,
                 itemCount: upper.length,
                 itemBuilder: (context, index) =>
                     ReorderableDelayedDragStartListener(
@@ -231,43 +215,32 @@ class _CategoriesPageState extends State<CategoriesPage> {
               )
             ],
           ),
-          pinned
-              ? DropRegion(
-                  formats: Formats.standardFormats,
-                  onDropOver: (p0) async {
-                    _scrollController.jumpTo(_scrollController.offset - 2);
-
-                    return DropOperation.userCancelled;
-                  },
-                  onPerformDrop: (PerformDropEvent) async {},
-                  child: Container(
-                    color: Colors.black.withOpacity(0.2),
-                    height: 100,
-                    width: MediaQuery.of(context).size.width,
-                  ),
+          showDropRegion
+              ? DropHoverRegion(
+                  onDropHover: () =>
+                      _scrollController.jumpTo(_scrollController.offset - 2),
                 )
               : const SizedBox(),
-          pinned
+          showDropRegion
               ? Positioned(
                   bottom: 0,
-                  child: DropRegion(
-                    formats: Formats.standardFormats,
-                    onDropOver: (p0) async {
-                      _scrollController.jumpTo(_scrollController.offset + 2);
-
-                      return DropOperation.none;
-                    },
-                    onPerformDrop: (PerformDropEvent) async {},
-                    child: Container(
-                      color: Colors.black.withOpacity(0.2),
-                      height: 100,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                  ),
-                )
+                  child: DropHoverRegion(
+                    onDropHover: () =>
+                        _scrollController.jumpTo(_scrollController.offset + 2),
+                  ))
               : const SizedBox(),
         ],
       ),
     );
+  }
+
+  void _reorderCategories(int oldIndex, int newIndex) {
+    setState(() {
+      if (oldIndex < newIndex) {
+        newIndex -= 1;
+      }
+      final List<String> item = upper.removeAt(oldIndex);
+      upper.insert(newIndex, item);
+    });
   }
 }
